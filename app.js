@@ -16,6 +16,15 @@ app.use(express.static(__dirname));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'home.html'));
 });
+app.get('/ip', async (req, res) => {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    res.json({ error: err.message });
+  }
+});
 
 // Rota para busca de alimentos
 app.get('/api/search', async (req, res) => {
