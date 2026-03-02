@@ -13,6 +13,16 @@
     </div>
 
     <div class="main-container">
+        <!-- Calendário / Seletor de Data -->
+        <div class="calendar-container">
+            <button class="cal-nav-btn" onclick="changeDate(-1)">&#9664;</button>
+            <div class="date-display">
+                <span id="current-date-label"></span>
+                <input type="date" id="date-picker" onchange="loadDate(this.value)">
+            </div>
+            <button class="cal-nav-btn" onclick="changeDate(1)">&#9654;</button>
+        </div>
+
         <!-- Relatório Nutricional -->
         <div class="report-container">
             <h2>📊 Relatório do Dia</h2>

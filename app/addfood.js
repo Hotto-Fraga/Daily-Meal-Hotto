@@ -1,11 +1,85 @@
-// Variáveis globais para gerenciar refeições
+// ==================== GESTÃO DE DATAS ====================
+
+// Data selecionada (formato YYYY-MM-DD)
+let selectedDate = getTodayString();
 let currentMeal = '';
-const meals = {
-    breakfast: [],
-    lunch: [],
-    dinner: [],
-    snacks: []
-};
+let meals = { breakfast: [], lunch: [], dinner: [], snacks: [] };
+
+function getTodayString() {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+}
+
+function formatDateLabel(dateStr) {
+    const today = getTodayString();
+    const date = new Date(dateStr + 'T12:00:00');
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    const formatted = date.toLocaleDateString('pt-BR', options);
+
+    if (dateStr === today) return `Hoje — ${formatted}`;
+
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if (dateStr === yesterday.toISOString().split('T')[0]) return `Ontem — ${formatted}`;
+
+    return formatted;
+}
+
+function changeDate(offset) {
+    const date = new Date(selectedDate + 'T12:00:00');
+    date.setDate(date.getDate() + offset);
+    selectedDate = date.toISOString().split('T')[0];
+    document.getElementById('date-picker').value = selectedDate;
+    refreshUI();
+}
+
+function loadDate(dateStr) {
+    selectedDate = dateStr;
+    refreshUI();
+}
+
+function refreshUI() {
+    document.getElementById('current-date-label').textContent = formatDateLabel(selectedDate);
+    document.getElementById('date-picker').value = selectedDate;
+    meals = loadMealsFromStorage(selectedDate);
+    ['breakfast', 'lunch', 'dinner', 'snacks'].forEach(m => updateMealList(m));
+    updateTotals();
+    updateAddButtons();
+}
+
+// Desativar botões "Adicionar" para dias passados (opcional: remover se quiser editar o passado)
+function updateAddButtons() {
+    const isEditable = true; // mude para (selectedDate === getTodayString()) se quiser bloquear dias passados
+    document.querySelectorAll('.add-btn').forEach(btn => {
+        btn.disabled = !isEditable;
+        btn.style.opacity = isEditable ? '1' : '0.4';
+    });
+}
+
+// ==================== LOCALSTORAGE ====================
+
+function getStorageKey(dateStr) {
+    return `meals_${dateStr}`;
+}
+
+function saveMealsToStorage() {
+    localStorage.setItem(getStorageKey(selectedDate), JSON.stringify(meals));
+    // Guardar lista de datas com dados
+    const dates = JSON.parse(localStorage.getItem('meal_dates') || '[]');
+    if (!dates.includes(selectedDate)) {
+        dates.push(selectedDate);
+        dates.sort();
+        localStorage.setItem('meal_dates', JSON.stringify(dates));
+    }
+}
+
+function loadMealsFromStorage(dateStr) {
+    const data = localStorage.getItem(getStorageKey(dateStr));
+    if (data) return JSON.parse(data);
+    return { breakfast: [], lunch: [], dinner: [], snacks: [] };
+}
+
+// ==================== MODAL & ALIMENTOS ====================
 
 function openAddFood(meal) {
     currentMeal = meal;
@@ -41,6 +115,7 @@ function addFoodManual() {
 
     const food = { name, calories, carbs, protein, fat };
     meals[currentMeal].push(food);
+    saveMealsToStorage();
     updateMealList(currentMeal);
     updateTotals();
     closeModal();
@@ -63,6 +138,7 @@ function updateMealList(meal) {
 
 function removeFood(meal, index) {
     meals[meal].splice(index, 1);
+    saveMealsToStorage();
     updateMealList(meal);
     updateTotals();
 }
@@ -84,6 +160,8 @@ function updateTotals() {
     document.getElementById('total-protein').textContent = totalProtein.toFixed(1) + 'g';
     document.getElementById('total-fat').textContent = totalFat.toFixed(1) + 'g';
 }
+
+// ==================== PESQUISA API ====================
 
 async function searchFood() {
     const query = document.getElementById('food-search').value;
@@ -122,7 +200,6 @@ async function searchFood() {
 }
 
 function selectFood(name, description) {
-    // Parse description: "Per 100g - Calories: 52kcal | Fat: 0.17g | Carbs: 13.81g | Protein: 0.26g"
     const calories = parseFloat(description.match(/Calories:\s*([\d.]+)/)?.[1]) || 0;
     const fat = parseFloat(description.match(/Fat:\s*([\d.]+)/)?.[1]) || 0;
     const carbs = parseFloat(description.match(/Carbs:\s*([\d.]+)/)?.[1]) || 0;
@@ -130,7 +207,14 @@ function selectFood(name, description) {
 
     const food = { name, calories, carbs, protein, fat };
     meals[currentMeal].push(food);
+    saveMealsToStorage();
     updateMealList(currentMeal);
     updateTotals();
     closeModal();
 }
+
+// ==================== INICIALIZAÇÃO ====================
+
+document.addEventListener('DOMContentLoaded', () => {
+    refreshUI();
+});

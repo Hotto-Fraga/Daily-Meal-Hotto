@@ -42,6 +42,66 @@ body {
     margin-right: auto;
 }
 
+/* Calendario / Seletor de Data */
+.calendar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    background: #ffffff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.cal-nav-btn {
+    background: #dd0505;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.cal-nav-btn:hover {
+    background: #bb0404;
+}
+
+.date-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.date-display #current-date-label {
+    font-weight: bold;
+    font-size: 1.05em;
+    color: #333;
+}
+
+.date-display input[type="date"] {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85em;
+    color: #666;
+    cursor: pointer;
+}
+
+.date-display input[type="date"]:focus {
+    border-color: #dd0505;
+    outline: none;
+}
+
 /* Relatorio Nutricional */
 .report-container {
     background: linear-gradient(135deg, #dd0505, #ff6b6b);
