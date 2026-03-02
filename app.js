@@ -10,12 +10,13 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static(__dirname));
-
-// Rota para a home page
+// Rota para a home page (ANTES do static para não servir index.html)
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'home.html'));
 });
+
+// Servir ficheiros estáticos (sem index.html automático)
+app.use(express.static(__dirname, { index: false }));
 
 // Rota para obter o IP do cliente
 app.get('/ip', async (req, res) => {
