@@ -2,11 +2,31 @@
     box-sizing: border-box;
 }
 
+:root {
+    --color-primary: #dd0505;
+    --color-primary-hover: #bb0404;
+    --color-danger: #ff4444;
+    --color-danger-hover: #cc0000;
+    --color-text: #333;
+    --color-text-muted: #666;
+    --color-bg: #f5f5f5;
+    --color-bg-card: #ffffff;
+    --color-bg-subtle: #f9f9f9;
+    --color-border: #ddd;
+    --color-border-light: #eee;
+    --font-main: 'Fira Code', monospace;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 15px;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Fira Code', monospace;
-    background-color: #f5f5f5;
+    font-family: var(--font-main);
+    background-color: var(--color-bg);
 }
 
 #titulo {
@@ -15,12 +35,12 @@ body {
     text-align: center;
     margin: 0;
     padding: 20px 0;
-    font-family: 'Fira Code', monospace;
+    font-family: var(--font-main);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #dd0505;
+    background-color: var(--color-primary);
     z-index: 1001;
 }
 
@@ -49,14 +69,14 @@ body {
     justify-content: center;
     gap: 15px;
     margin-bottom: 20px;
-    background: #ffffff;
+    background: var(--color-bg-card);
     padding: 15px 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
 }
 
 .cal-nav-btn {
-    background: #dd0505;
+    background: var(--color-primary);
     color: white;
     border: none;
     width: 36px;
@@ -71,7 +91,7 @@ body {
 }
 
 .cal-nav-btn:hover {
-    background: #bb0404;
+    background: var(--color-primary-hover);
 }
 
 .date-display {
@@ -84,30 +104,30 @@ body {
 .date-display #current-date-label {
     font-weight: bold;
     font-size: 1.05em;
-    color: #333;
+    color: var(--color-text);
 }
 
 .date-display input[type="date"] {
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
     padding: 4px 8px;
-    font-family: 'Fira Code', monospace;
+    font-family: var(--font-main);
     font-size: 0.85em;
-    color: #666;
+    color: var(--color-text-muted);
     cursor: pointer;
 }
 
 .date-display input[type="date"]:focus {
-    border-color: #dd0505;
+    border-color: var(--color-primary);
     outline: none;
 }
 
 /* Relatorio Nutricional */
 .report-container {
-    background: linear-gradient(135deg, #dd0505, #ff6b6b);
+    background: linear-gradient(135deg, var(--color-primary), #ff6b6b);
     color: white;
     padding: 25px;
-    border-radius: 15px;
+    border-radius: var(--radius-xl);
     margin-bottom: 30px;
     box-shadow: 0 4px 15px rgba(221, 5, 5, 0.3);
 }
@@ -151,11 +171,11 @@ body {
 }
 
 .meal-section {
-    background: #ffffff;
-    border-radius: 12px;
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border-left: 4px solid #dd0505;
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--color-primary);
 }
 
 .meal-header {
@@ -168,23 +188,23 @@ body {
 .meal-header h2 {
     margin: 0;
     font-size: 1.2em;
-    color: #333;
+    color: var(--color-text);
 }
 
 .add-btn {
-    background-color: #dd0505;
+    background-color: var(--color-primary);
     color: white;
     border: none;
     padding: 8px 16px;
     border-radius: 20px;
     cursor: pointer;
-    font-family: 'Fira Code', monospace;
+    font-family: var(--font-main);
     font-size: 0.9em;
     transition: background-color 0.3s;
 }
 
 .add-btn:hover {
-    background-color: #bb0404;
+    background-color: var(--color-primary-hover);
 }
 
 .food-list {
@@ -198,25 +218,25 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 12px;
-    background: #f9f9f9;
+    background: var(--color-bg-subtle);
     margin-bottom: 8px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     gap: 10px;
 }
 
 .food-name {
     font-weight: bold;
-    color: #333;
+    color: var(--color-text);
     flex: 1;
 }
 
 .food-info {
-    color: #666;
+    color: var(--color-text-muted);
     font-size: 0.85em;
 }
 
 .remove-btn {
-    background: #ff4444;
+    background: var(--color-danger);
     color: white;
     border: none;
     width: 25px;
@@ -227,7 +247,7 @@ body {
 }
 
 .remove-btn:hover {
-    background: #cc0000;
+    background: var(--color-danger-hover);
 }
 
 /* Modal */
@@ -247,7 +267,7 @@ body {
 .modal-content {
     background: white;
     padding: 30px;
-    border-radius: 15px;
+    border-radius: var(--radius-xl);
     width: 90%;
     max-width: 500px;
     max-height: 80vh;
@@ -261,7 +281,7 @@ body {
     right: 20px;
     font-size: 1.5em;
     cursor: pointer;
-    color: #666;
+    color: var(--color-text-muted);
 }
 
 .close-btn:hover {
@@ -270,49 +290,49 @@ body {
 
 .modal-content h3 {
     margin: 0 0 20px 0;
-    color: #dd0505;
+    color: var(--color-primary);
 }
 
 .modal-content input {
     width: 100%;
     padding: 12px;
     margin-bottom: 10px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-family: 'Fira Code', monospace;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-main);
     font-size: 0.9em;
 }
 
 .modal-content input:focus {
-    border-color: #dd0505;
+    border-color: var(--color-primary);
     outline: none;
 }
 
 .modal-content button {
-    background-color: #dd0505;
+    background-color: var(--color-primary);
     color: white;
     border: none;
     padding: 12px 24px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     cursor: pointer;
-    font-family: 'Fira Code', monospace;
+    font-family: var(--font-main);
     width: 100%;
     margin-bottom: 15px;
 }
 
 .modal-content button:hover {
-    background-color: #bb0404;
+    background-color: var(--color-primary-hover);
 }
 
 .manual-add {
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--color-border-light);
     padding-top: 20px;
     margin-top: 10px;
 }
 
 .manual-add h4 {
     margin: 0 0 15px 0;
-    color: #666;
+    color: var(--color-text-muted);
 }
 
 #search-results {
@@ -320,25 +340,54 @@ body {
 }
 
 .search-result-item {
-    background: #f9f9f9;
+    background: var(--color-bg-subtle);
     padding: 12px;
     margin-bottom: 10px;
-    border-radius: 8px;
-    border-left: 3px solid #dd0505;
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--color-primary);
 }
 
 .search-result-item strong {
-    color: #333;
+    color: var(--color-text);
 }
 
 .search-result-item p {
     margin: 5px 0;
     font-size: 0.85em;
-    color: #666;
+    color: var(--color-text-muted);
 }
 
 .search-result-item button {
     margin-top: 5px;
     padding: 8px 16px;
     width: auto;
+}
+
+/* Quantity Modal */
+.quantity-food-info {
+    background: var(--color-bg-subtle);
+    padding: 12px;
+    border-radius: var(--radius-md);
+    margin-bottom: 15px;
+    border-left: 3px solid var(--color-primary);
+    font-size: 0.9em;
+    color: var(--color-text);
+}
+
+.quantity-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: var(--color-text);
+    font-size: 0.95em;
+}
+
+.quantity-preview {
+    background: #fff3f3;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    font-size: 0.9em;
+    color: #444;
+    min-height: 20px;
+    margin-bottom: 12px;
 }

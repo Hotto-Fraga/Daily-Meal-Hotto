@@ -1,10 +1,10 @@
-const axios = require('axios');
+import axios from 'axios';
 
 // API FatSecret
 const clientId = 'e1616ca46d994be1934d3e9c53ee1008';
 const clientSecret = 'f5141238be0d439195c9df8aa3ff8fe0';
 
-async function getAccessToken() {
+const getAccessToken = async () => {
     const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
     
     const response = await axios.post('https://oauth.fatsecret.com/connect/token', 
@@ -17,9 +17,9 @@ async function getAccessToken() {
         }
     );
     return response.data.access_token;
-}
+};
 
-async function searchFood(query) {
+const searchFood = async (query) => {
     const token = await getAccessToken();
     const response = await axios.get(`https://platform.fatsecret.com/rest/server.api?method=foods.search&search_expression=${encodeURIComponent(query)}&format=json`, {
         headers: {
@@ -27,7 +27,7 @@ async function searchFood(query) {
         }
     });
     return response.data;
-}
+};
 
-module.exports = { searchFood, getAccessToken };
+export { searchFood, getAccessToken };
 

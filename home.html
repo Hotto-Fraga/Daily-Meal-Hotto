@@ -107,6 +107,19 @@
         </div>
     </div>
 
+    <!-- Inserir quantidade de comida -->
+    <div class="modal" id="quantity-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeQuantityModal()">&times;</span>
+            <h3>Selecionar Quantidade</h3>
+            <div id="quantity-food-info" class="quantity-food-info"></div>
+            <label for="quantity-input" class="quantity-label">Quantidade (g):</label>
+            <input type="number" id="quantity-input" placeholder="Ex: 150" min="1" step="1">
+            <p class="quantity-preview" id="quantity-preview"></p>
+            <button onclick="confirmQuantity()">Confirmar</button>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="/app/addfood.js"></script>
 </body>

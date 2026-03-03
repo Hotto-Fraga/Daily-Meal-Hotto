@@ -1,6 +1,10 @@
-const path = require('path');
-const express = require('express');
-const { searchFood } = require('./api/fatsecretapi');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import express from 'express';
+import { searchFood } from './api/fatsecretapi.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -20,23 +24,27 @@ app.use(express.static(__dirname, { index: false }));
 
 // Rota para obter o IP do cliente
 app.get('/ip', async (req, res) => {
-  try {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    res.json(data);
-  } catch (err) {
-    res.json({ error: err.message });
-  }
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        res.json(data);
+    } catch (err) {
+        res.json({ error: err.message });
+    }
 });
 
 // Rota para busca de alimentos
 app.get('/api/search', async (req, res) => {
+    const query = req.query.food;
+    if (!query) {
+        return res.status(400).json({ error: 'Parâmetro food é obrigatório' });
+    }
     try {
-        const query = req.query.food;
         const dados = await searchFood(query);
         res.json(dados);
     } catch (error) {
-        res.status(500).json({ error: "Erro na busca" });
+        console.error('Erro na busca:', error.message);
+        res.status(500).json({ error: 'Erro na busca', details: error.message });
     }
 });
 
@@ -46,4 +54,4 @@ app.listen(PORT, () => {
 });
 
 // Export para Vercel
-module.exports = app;
+export default app;
